@@ -1,10 +1,22 @@
 from pathlib import Path
+import functools
 
 p = Path(__file__).with_name('advent-12-data.txt')
 
 with p.open("r") as f:
     input_array = f.read().splitlines()
 
+#recursive_function(args):
+    # check for exit condition
+    # check for early cutoff (e.g. if it's possible to realize none of the children of this node matter to the final answer)
+    # for each possible "move" (2 in this problem)
+        # do move
+        # call recursive_function with the new arguments
+        # track something (best, worst, sum, whatever)
+        # undo move
+    # return something (best, worst, sum, whatever)
+
+@functools.lru_cache(maxsize=None)
 def calculatePossibleCombinations(record: str, groups: tuple):
 
     if not groups:
@@ -57,6 +69,10 @@ for input in input_array:
     record, rawGroup = input.split(' ')
 
     groups = [int(x) for x in rawGroup.split(',')]
+
+    record = ((record + '?') * 5) [:-1]
+
+    groups = groups * 5 
 
     output += calculatePossibleCombinations(record, tuple(groups))
 
